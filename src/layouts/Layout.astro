@@ -62,6 +62,11 @@ const { title, description = "Mo Shaban's tech blog - Thoughts on software devel
               <span class="file-icon" aria-hidden="true">📝</span>
               <span class="link-text">about.md</span>
             </a>
+            <button class="search-button" id="header-search-btn" aria-label="Open search">
+              <span class="search-icon" aria-hidden="true">🔍</span>
+              <span class="search-text">Search</span>
+              <kbd class="search-kbd">/</kbd>
+            </button>
           </div>
         </nav>
       </div>
@@ -276,6 +281,7 @@ const { title, description = "Mo Shaban's tech blog - Thoughts on software devel
     display: flex;
     gap: var(--spacing-lg);
     font-size: 0.875rem;
+    align-items: center;
   }
 
   .nav-link {
@@ -309,6 +315,53 @@ const { title, description = "Mo Shaban's tech blog - Thoughts on software devel
     font-family: var(--font-mono);
     font-weight: 500;
   }
+
+   .search-button {
+     display: flex;
+     align-items: center;
+     gap: var(--spacing-sm);
+     background: var(--bg-tertiary);
+     border: 1px solid var(--border-primary);
+     color: var(--text-secondary);
+     padding: var(--spacing-sm) var(--spacing-md);
+     border-radius: var(--radius-md);
+     font-family: var(--font-mono);
+     font-size: 0.875rem;
+     cursor: pointer;
+     transition: all 0.2s ease;
+     position: relative;
+   }
+
+   .search-button:hover {
+     background: var(--bg-elevated);
+     color: var(--text-bright);
+     border-color: var(--accent-primary);
+     transform: translateY(-1px);
+   }
+
+   .search-button:focus {
+     outline: 2px solid var(--accent-primary);
+     outline-offset: 2px;
+   }
+
+   .search-icon {
+     font-size: 1rem;
+   }
+
+   .search-text {
+     font-weight: 500;
+   }
+
+   .search-kbd {
+     background: var(--bg-secondary);
+     border: 1px solid var(--border-secondary);
+     border-radius: 3px;
+     padding: 0.125rem 0.25rem;
+     font-size: 0.6875rem;
+     color: var(--accent-primary);
+     font-family: var(--font-mono);
+     margin-left: var(--spacing-xs);
+   }
 
   .main {
     flex: 1;
