@@ -295,6 +295,40 @@
     font-weight: 600;
   }
 
+  .search-hint {
+    position: fixed;
+    bottom: 2rem;
+    left: 7rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+    z-index: 100;
+  }
+
+  .search-hint:hover {
+    opacity: 1;
+  }
+
+  .search-hint kbd {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-primary);
+    border-radius: 3px;
+    padding: 0.125rem 0.25rem;
+    font-size: 0.6875rem;
+    color: var(--accent-primary);
+    font-family: var(--font-mono);
+  }
+
   .no-results {
     text-align: center;
     padding: 2rem;
@@ -390,7 +424,6 @@
       this.results = document.getElementById('search-results');
       this.stats = document.getElementById('search-stats');
       this.closeBtn = document.getElementById('close-search');
-      this.hint = document.getElementById('search-hint');
 
       await this.loadPosts();
       this.setupEventListeners();
@@ -425,11 +458,6 @@
 
       this.input.addEventListener('keydown', (e) => {
         this.handleKeyboardNavigation(e);
-      });
-
-      // Hint click
-      this.hint.addEventListener('click', () => {
-        this.open();
       });
     }
 
