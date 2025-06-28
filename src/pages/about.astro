@@ -1,0 +1,483 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="About - Mo Shaban" description="Learn more about Mo Shaban, software engineer and tech blogger.">
+  <div class="container">
+    <div class="about-content">
+      <div class="terminal-header">
+        <div class="terminal-controls">
+          <span class="control close"></span>
+          <span class="control minimize"></span>
+          <span class="control maximize"></span>
+        </div>
+        <div class="terminal-title">about_mo.sh</div>
+      </div>
+      
+      <div class="terminal-content">
+        <div class="command-line">
+          <span class="prompt">$</span>
+          <span class="command">cat README.md</span>
+        </div>
+        
+        <div class="file-content">
+          <h1 class="markdown-h1">About Mo Shaban</h1>
+          
+          <div class="intro-section">
+            <div class="code-block">
+              <div class="code-header">
+                <span class="filename">developer.json</span>
+                <span class="language">JSON</span>
+              </div>
+              <pre is:raw><code>{
+  <span class="json-key">"name"</span>: <span class="json-string">"Mo Shaban"</span>,
+  <span class="json-key">"role"</span>: <span class="json-string">"Software Engineer"</span>,
+  <span class="json-key">"location"</span>: <span class="json-string">"Earth 🌍"</span>,
+  <span class="json-key">"passion"</span>: <span class="json-string">"Building elegant solutions"</span>,
+  <span class="json-key">"languages"</span>: [
+    <span class="json-string">"JavaScript"</span>,
+    <span class="json-string">"TypeScript"</span>,
+    <span class="json-string">"Python"</span>,
+    <span class="json-string">"Go"</span>
+  ],
+  <span class="json-key">"currentFocus"</span>: <span class="json-string">"Full-stack development"</span>,
+  <span class="json-key">"status"</span>: <span class="json-string">"Always learning 📚"</span>
+}</code></pre>
+            </div>
+          </div>
+
+          <section class="section">
+            <h2 class="markdown-h2">What I Do</h2>
+            <div class="content-block">
+              <p>
+                I specialize in full-stack development, with experience in modern web technologies, 
+                cloud platforms, and software architecture. I enjoy working on projects that make 
+                a positive impact and help people solve real-world problems.
+              </p>
+              
+              <div class="tech-stack">
+                <div class="stack-category">
+                  <h3>Frontend</h3>
+                  <div class="tech-tags">
+                    <span class="tech-tag react">React ⚛️</span>
+                    <span class="tech-tag vue">Vue.js 💚</span>
+                    <span class="tech-tag astro">Astro 🚀</span>
+                    <span class="tech-tag next">Next.js ▲</span>
+                  </div>
+                </div>
+                
+                <div class="stack-category">
+                  <h3>Backend</h3>
+                  <div class="tech-tags">
+                    <span class="tech-tag node">Node.js 🟢</span>
+                    <span class="tech-tag python">Python 🐍</span>
+                    <span class="tech-tag go">Go 🐹</span>
+                    <span class="tech-tag postgres">PostgreSQL 🐘</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2 class="markdown-h2">Why I Write</h2>
+            <div class="content-block">
+              <blockquote class="dev-quote">
+                <div class="quote-content">
+                  <p>
+                    This blog is my way of sharing what I learn, documenting my journey, and hopefully 
+                    helping other developers along the way. I believe in the power of knowledge sharing 
+                    and the importance of giving back to the community that has taught me so much.
+                  </p>
+                </div>
+                <div class="quote-author">
+                  <span class="quote-dash">--</span>
+                  <span class="author-name">Mo Shaban</span>
+                </div>
+              </blockquote>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2 class="markdown-h2">Get In Touch</h2>
+            <div class="content-block">
+              <p>
+                I'm always interested in connecting with fellow developers, discussing new ideas, 
+                or collaborating on interesting projects. Feel free to reach out!
+              </p>
+              
+              <div class="contact-methods">
+                <div class="contact-item">
+                  <span class="contact-icon">📧</span>
+                  <code>echo "hello@moshaban.co"</code>
+                </div>
+                <div class="contact-item">
+                  <span class="contact-icon">🐙</span>
+                  <code>git clone github.com/moshaban</code>
+                </div>
+                <div class="contact-item">
+                  <span class="contact-icon">🐦</span>
+                  <code>curl -X GET twitter.com/moshaban</code>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        
+        <div class="command-line">
+          <span class="prompt">$</span>
+          <span class="cursor">_</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .about-content {
+    max-width: 800px;
+    margin: 0 auto;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+
+  .terminal-header {
+    background: var(--bg-tertiary);
+    padding: var(--spacing-sm) var(--spacing-md);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-primary);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+
+  .terminal-controls {
+    display: flex;
+    gap: var(--spacing-sm);
+  }
+
+  .control {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .control.close {
+    background: var(--accent-error);
+  }
+
+  .control.minimize {
+    background: var(--accent-warning);
+  }
+
+  .control.maximize {
+    background: var(--accent-success);
+  }
+
+  .control:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 8px currentColor;
+  }
+
+  .terminal-title {
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  .terminal-content {
+    padding: var(--spacing-xl);
+    background: var(--bg-primary);
+    font-family: var(--font-mono);
+    line-height: 1.6;
+  }
+
+  .command-line {
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.9rem;
+  }
+
+  .command-line:last-child {
+    margin-top: var(--spacing-lg);
+    margin-bottom: 0;
+  }
+
+  .prompt {
+    color: var(--accent-success);
+    font-weight: 600;
+    margin-right: var(--spacing-sm);
+  }
+
+  .command {
+    color: var(--accent-primary);
+  }
+
+  .cursor {
+    color: var(--accent-primary);
+    animation: blink 1s infinite;
+  }
+
+  .file-content {
+    font-family: var(--font-sans);
+    color: var(--text-secondary);
+  }
+
+  .markdown-h1 {
+    font-size: 2.5rem;
+    color: var(--text-bright);
+    margin-bottom: var(--spacing-xl);
+    position: relative;
+  }
+
+  .markdown-h1::before {
+    content: '# ';
+    color: var(--syntax-keyword);
+    font-family: var(--font-mono);
+    font-weight: 600;
+  }
+
+  .markdown-h2 {
+    font-size: 1.8rem;
+    color: var(--syntax-function);
+    margin: var(--spacing-2xl) 0 var(--spacing-lg) 0;
+    position: relative;
+  }
+
+  .markdown-h2::before {
+    content: '## ';
+    color: var(--syntax-keyword);
+    font-family: var(--font-mono);
+    font-weight: 600;
+  }
+
+  .intro-section {
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .code-block {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin: var(--spacing-lg) 0;
+  }
+
+  .code-header {
+    background: var(--bg-tertiary);
+    padding: var(--spacing-sm) var(--spacing-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    border-bottom: 1px solid var(--border-primary);
+  }
+
+  .filename {
+    color: var(--text-secondary);
+  }
+
+  .language {
+    color: var(--syntax-comment);
+    font-size: 0.7rem;
+  }
+
+  .code-block pre {
+    margin: 0;
+    padding: var(--spacing-lg);
+    background: var(--bg-primary);
+    border: none;
+    font-size: 0.9rem;
+  }
+
+  .code-block code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--text-primary);
+  }
+
+  /* JSON syntax highlighting */
+  .json-key {
+    color: var(--syntax-property);
+  }
+
+  .json-string {
+    color: var(--syntax-string);
+  }
+
+  .section {
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .content-block {
+    margin-left: var(--spacing-lg);
+  }
+
+  .content-block p {
+    line-height: 1.7;
+    margin-bottom: var(--spacing-md);
+    font-size: 1.1rem;
+  }
+
+  .tech-stack {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-xl);
+    margin: var(--spacing-xl) 0;
+  }
+
+  .stack-category h3 {
+    color: var(--syntax-function);
+    font-size: 1.2rem;
+    margin-bottom: var(--spacing-md);
+    font-family: var(--font-mono);
+  }
+
+  .tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+  }
+
+  .tech-tag {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: 1px solid var(--border-primary);
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .tech-tag:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(88, 166, 255, 0.2);
+  }
+
+  .tech-tag.react:hover { border-color: #61dafb; }
+  .tech-tag.vue:hover { border-color: #4fc08d; }
+  .tech-tag.astro:hover { border-color: #ff5d01; }
+  .tech-tag.next:hover { border-color: #000; }
+  .tech-tag.node:hover { border-color: #339933; }
+  .tech-tag.python:hover { border-color: #3776ab; }
+  .tech-tag.go:hover { border-color: #00add8; }
+  .tech-tag.postgres:hover { border-color: #336791; }
+
+  .dev-quote {
+    background: var(--bg-secondary);
+    border-left: 4px solid var(--accent-primary);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+    position: relative;
+  }
+
+  .dev-quote::before {
+    content: '"""';
+    position: absolute;
+    top: var(--spacing-sm);
+    left: var(--spacing-md);
+    color: var(--accent-primary);
+    font-size: 2rem;
+    font-family: var(--font-mono);
+    opacity: 0.5;
+  }
+
+  .quote-content p {
+    margin-left: var(--spacing-lg);
+    font-style: italic;
+    color: var(--text-secondary);
+  }
+
+  .quote-author {
+    text-align: right;
+    margin-top: var(--spacing-md);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+  }
+
+  .quote-dash {
+    color: var(--syntax-comment);
+  }
+
+  .author-name {
+    color: var(--syntax-function);
+    font-weight: 600;
+  }
+
+  .contact-methods {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-primary);
+    transition: all 0.2s ease;
+  }
+
+  .contact-item:hover {
+    background: var(--bg-elevated);
+    border-color: var(--accent-primary);
+    transform: translateX(4px);
+  }
+
+  .contact-icon {
+    font-size: 1.2rem;
+  }
+
+  .contact-item code {
+    background: none;
+    border: none;
+    color: var(--syntax-string);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 768px) {
+    .terminal-content {
+      padding: var(--spacing-lg);
+    }
+    
+    .markdown-h1 {
+      font-size: 2rem;
+    }
+    
+    .markdown-h2 {
+      font-size: 1.5rem;
+    }
+    
+    .content-block {
+      margin-left: 0;
+    }
+    
+    .tech-stack {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-lg);
+    }
+    
+    .code-block pre {
+      padding: var(--spacing-md);
+      font-size: 0.8rem;
+    }
+
+    .quote-content p {
+      margin-left: var(--spacing-md);
+    }
+  }
+</style>

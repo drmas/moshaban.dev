@@ -1,0 +1,489 @@
+---
+import Terminal from '../components/Terminal.astro';
+
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Mo Shaban's tech blog - Thoughts on software development, technology, and programming." } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="author" content="Mo Shaban" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="grain-overlay"></div>
+    
+    <header class="header">
+      <div class="container">
+        <nav class="nav" role="navigation" aria-label="Main navigation">
+          <div class="logo">
+            <a href="/" class="terminal-prompt">
+              <span class="user">mo</span><span class="at">@</span><span class="host">localhost</span>
+              <span class="separator">:</span><span class="path">~/blog</span>
+              <span class="cursor">_</span>
+            </a>
+          </div>
+          <div class="nav-links">
+            <a href="/" class="nav-link" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>
+              <span class="file-icon" aria-hidden="true">📁</span>
+              <span class="link-text">posts/</span>
+            </a>
+            <a href="/about" class="nav-link" aria-current={Astro.url.pathname === '/about' ? 'page' : undefined}>
+              <span class="file-icon" aria-hidden="true">📝</span>
+              <span class="link-text">about.md</span>
+            </a>
+          </div>
+        </nav>
+      </div>
+    </header>
+    
+    <main class="main" role="main">
+      <slot />
+    </main>
+    
+    <!-- Terminal Component -->
+    <Terminal />
+    
+    <footer class="footer" role="contentinfo">
+      <div class="container">
+        <div class="status-bar">
+          <div class="status-left">
+            <span class="status-item">
+              <span class="status-dot online" aria-label="Online status"></span>
+              <code>mo@localhost</code>
+            </span>
+            <span class="status-item">
+              <code>main branch</code>
+            </span>
+          </div>
+          <div class="status-right">
+            <span class="status-item">
+              <code>&copy; 2025 Mo Shaban</code>
+            </span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    /* Color palette - optimized for readability and contrast */
+    --bg-primary: #0a0e13;
+    --bg-secondary: #151922;
+    --bg-tertiary: #1f2329;
+    --bg-elevated: #292d35;
+    
+    --border-primary: #2d3139;
+    --border-secondary: #1f2329;
+    --border-accent: #3d414a;
+    
+    /* Text colors with proper contrast ratios */
+    --text-primary: #e8e6e3;
+    --text-secondary: #bfbdb6;
+    --text-muted: #878681;
+    --text-bright: #ffffff;
+    
+    /* Syntax highlighting - subtle but clear */
+    --syntax-keyword: #ff7b72;
+    --syntax-string: #a5d6ff;
+    --syntax-function: #d2a8ff;
+    --syntax-variable: #79c0ff;
+    --syntax-comment: #7c7c7c;
+    --syntax-property: #7ee787;
+    --syntax-operator: #ff7b72;
+    
+    /* Accent colors */
+    --accent-primary: #4fc3f7;
+    --accent-secondary: #ff8a65;
+    --accent-success: #66bb6a;
+    --accent-warning: #ffb74d;
+    --accent-error: #f44336;
+    
+    /* Typography */
+    --font-mono: 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', monospace;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    
+    /* Spacing system - 8px base unit */
+    --container-width: 1200px;
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    --spacing-3xl: 4rem;
+    
+    /* Consistent border radius */
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+    --radius-xl: 12px;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+
+  /* ===== BASE STYLES ===== */
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  /* Subtle texture overlay */
+  .grain-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.015;
+    background-image: 
+      radial-gradient(circle at 25% 25%, var(--accent-primary) 1px, transparent 1px),
+      radial-gradient(circle at 75% 75%, var(--accent-secondary) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: 0 0, 25px 25px;
+    animation: grain 20s linear infinite;
+  }
+
+  @keyframes grain {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-1px, 1px); }
+    50% { transform: translate(1px, -1px); }
+    75% { transform: translate(-1px, -1px); }
+  }
+
+  .container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+  }
+
+  /* ===== HEADER ===== */
+  .header {
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-primary);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+  }
+
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) 0;
+    font-family: var(--font-mono);
+  }
+
+  .terminal-prompt {
+    font-size: 0.875rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.125rem;
+  }
+
+  .user { color: var(--syntax-function); }
+  .at { color: var(--text-secondary); }
+  .host { color: var(--syntax-string); }
+  .separator { color: var(--text-secondary); }
+  .path { color: var(--syntax-property); }
+
+  .cursor {
+    color: var(--accent-primary);
+    animation: blink 1s infinite;
+    font-weight: 400;
+  }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  .nav-links {
+    display: flex;
+    gap: var(--spacing-lg);
+    font-size: 0.875rem;
+  }
+
+  .nav-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.15s ease;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    position: relative;
+  }
+
+  .nav-link:hover,
+  .nav-link[aria-current="page"] {
+    color: var(--text-bright);
+    background: var(--bg-tertiary);
+  }
+
+  .nav-link:focus {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+  }
+
+  .file-icon {
+    font-size: 1rem;
+  }
+
+  .link-text {
+    font-family: var(--font-mono);
+    font-weight: 500;
+  }
+
+  .main {
+    flex: 1;
+    padding: var(--spacing-2xl) 0;
+    position: relative;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-primary);
+    padding: var(--spacing-md) 0;
+  }
+
+  .status-bar {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-muted);
+  }
+
+  .status-left, .status-right {
+    display: flex;
+    gap: var(--spacing-lg);
+  }
+
+  .status-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-success);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
+  /* ===== TYPOGRAPHY ===== */
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--text-bright);
+    font-weight: 600;
+    line-height: 1.25;
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+
+  a {
+    color: var(--accent-primary);
+    transition: color 0.15s ease;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--accent-secondary);
+  }
+
+  /* Code styling */
+  code {
+    font-family: var(--font-mono);
+    background: var(--bg-tertiary);
+    color: var(--syntax-string);
+    padding: 0.25em 0.5em;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+    border: 1px solid var(--border-secondary);
+    font-weight: 500;
+  }
+
+  pre {
+    background: var(--bg-secondary);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    overflow-x: auto;
+    border: 1px solid var(--border-primary);
+    margin: var(--spacing-lg) 0;
+  }
+
+  pre code {
+    background: none;
+    padding: 0;
+    border: none;
+    color: var(--text-primary);
+    font-weight: 400;
+  }
+
+  /* Selection */
+  ::selection {
+    background: var(--accent-primary);
+    color: var(--bg-primary);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-primary);
+    border-radius: var(--radius-sm);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+  }
+
+  /* ===== RESPONSIVE DESIGN ===== */
+  @media (max-width: 768px) {
+    .container {
+      padding: 0 var(--spacing-md);
+    }
+    
+    .nav {
+      flex-direction: column;
+      gap: var(--spacing-md);
+      padding: var(--spacing-md) 0;
+    }
+    
+    .nav-links {
+      justify-content: center;
+    }
+    
+    .status-bar {
+      flex-direction: column;
+      gap: var(--spacing-sm);
+      text-align: center;
+    }
+    
+    .status-left, .status-right {
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: var(--spacing-md);
+    }
+
+    .main {
+      padding: var(--spacing-xl) 0;
+    }
+  }
+
+  /* ===== ACCESSIBILITY ===== */
+  @media (prefers-reduced-motion: reduce) {
+    .cursor,
+    .status-dot,
+    .grain-overlay {
+      animation: none;
+    }
+  }
+
+  @media (prefers-contrast: high) {
+    :root {
+      --border-primary: #4a4a4a;
+      --text-secondary: #ffffff;
+      --text-muted: #cccccc;
+    }
+  }
+
+  /* Focus indicators */
+  :focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* Skip link for screen readers */
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: var(--accent-primary);
+    color: var(--bg-primary);
+    padding: 8px;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    z-index: 1000;
+  }
+
+  .skip-link:focus {
+    top: 6px;
+  }
+</style>
