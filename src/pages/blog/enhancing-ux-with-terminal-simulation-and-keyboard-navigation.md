@@ -156,4 +156,4 @@ The key insight: good design starts with user mental models. When you build tool
 
 ---
 
-*Press Ctrl+` and type `tree` to explore the site structure, or use keyboard shortcuts to navigate. The best way to understand these concepts is to experience them firsthand.*
+*Press Ctrl+\` and type `tree` to explore the site structure, or use keyboard shortcuts to navigate. The best way to understand these concepts is to experience them firsthand.*
