@@ -238,39 +238,6 @@
     border-radius: 4px;
   }
 
-  .keyboard-scroll-indicator {
-    position: fixed;
-    right: 2rem;
-    top: 50%;
-    transform: translateY(-50%);
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-primary);
-    border-radius: 20px;
-    padding: 0.5rem;
-    opacity: 0;
-    transition: all 0.3s ease;
-    z-index: 200;
-    pointer-events: none;
-  }
-
-  .keyboard-scroll-indicator.show {
-    opacity: 0.8;
-  }
-
-  .keyboard-scroll-indicator kbd {
-    display: block;
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border-primary);
-    border-radius: 3px;
-    padding: 0.25rem;
-    margin: 0.125rem 0;
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    color: var(--accent-primary);
-    text-align: center;
-    min-width: 1rem;
-  }
-
   @media (max-width: 768px) {
     .help-body {
       grid-template-columns: 1fr;
@@ -302,7 +269,6 @@
     constructor() {
       this.isGPressed = false;
       this.gPressTimeout = null;
-      this.scrollIndicatorTimeout = null;
       this.helpOpen = false;
       
       this.init();
@@ -313,19 +279,8 @@
       this.helpIndicator = document.getElementById('keyboard-indicator');
       this.closeHelpBtn = document.getElementById('close-help');
       
-      this.createScrollIndicator();
       this.setupEventListeners();
       this.setupFocusManagement();
-    }
-
-    createScrollIndicator() {
-      this.scrollIndicator = document.createElement('div');
-      this.scrollIndicator.className = 'keyboard-scroll-indicator';
-      this.scrollIndicator.innerHTML = `
-        <kbd>J</kbd>
-        <kbd>K</kbd>
-      `;
-      document.body.appendChild(this.scrollIndicator);
     }
 
     setupEventListeners() {
@@ -441,10 +396,10 @@
           this.navigateToBlog();
           break;
         case 'j':
-          this.scrollDown();
+          this.scrollDownSmooth();
           break;
         case 'k':
-          this.scrollUp();
+          this.scrollUpSmooth();
           break;
         case 'r':
           this.reloadPage();
@@ -506,16 +461,14 @@
       }
     }
 
-    scrollDown() {
-      this.showScrollIndicator();
+    scrollDownSmooth() {
       window.scrollBy({
         top: 100,
         behavior: 'smooth'
       });
     }
 
-    scrollUp() {
-      this.showScrollIndicator();
+    scrollUpSmooth() {
       window.scrollBy({
         top: -100,
         behavior: 'smooth'
@@ -564,18 +517,6 @@
       } else {
         this.showNavigationFeedback('Search not available - use Ctrl+` for terminal');
       }
-    }
-
-    showScrollIndicator() {
-      this.scrollIndicator.classList.add('show');
-      
-      if (this.scrollIndicatorTimeout) {
-        clearTimeout(this.scrollIndicatorTimeout);
-      }
-      
-      this.scrollIndicatorTimeout = setTimeout(() => {
-        this.scrollIndicator.classList.remove('show');
-      }, 1000);
     }
 
     showNavigationFeedback(message) {
