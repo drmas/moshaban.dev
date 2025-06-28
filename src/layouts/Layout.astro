@@ -117,6 +117,30 @@ const { title, description = "Mo Shaban's tech blog - Thoughts on software devel
         url: post.url,
         content: post.compiledContent ? post.compiledContent().replace(/<[^>]*>/g, '') : ''
       }));
+
+      // Connect header search button
+      document.addEventListener('DOMContentLoaded', () => {
+        const headerSearchBtn = document.getElementById('header-search-btn');
+        if (headerSearchBtn && window.searchInstance) {
+          headerSearchBtn.addEventListener('click', () => {
+            window.searchInstance.open();
+          });
+        }
+
+        // Fallback if search instance isn't ready yet
+        let retryCount = 0;
+        const connectSearch = () => {
+          if (window.searchInstance && headerSearchBtn) {
+            headerSearchBtn.addEventListener('click', () => {
+              window.searchInstance.open();
+            });
+          } else if (retryCount < 10) {
+            retryCount++;
+            setTimeout(connectSearch, 100);
+          }
+        };
+        connectSearch();
+      });
     </script>
   </body>
 </html>
