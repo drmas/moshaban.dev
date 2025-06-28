@@ -1,6 +1,7 @@
 ---
 import Terminal from '../components/Terminal.astro';
 import KeyboardNavigation from '../components/KeyboardNavigation.astro';
+import Search from '../components/Search.astro';
 
 export interface Props {
   title: string;
@@ -76,6 +77,9 @@ const { title, description = "Mo Shaban's tech blog - Thoughts on software devel
     <!-- Keyboard Navigation -->
     <KeyboardNavigation />
     
+    <!-- Search -->
+    <Search />
+    
     <footer class="footer" role="contentinfo">
       <div class="container">
         <div class="status-bar">
@@ -96,6 +100,19 @@ const { title, description = "Mo Shaban's tech blog - Thoughts on software devel
         </div>
       </div>
     </footer>
+    
+    <!-- Search Data Script -->
+    <script is:inline define:vars={{ searchData: await Astro.glob('../pages/blog/*.md') }}>
+      // Make search data available globally
+      window.searchData = searchData.map(post => ({
+        title: post.frontmatter.title,
+        description: post.frontmatter.description,
+        publishDate: post.frontmatter.publishDate,
+        tags: post.frontmatter.tags,
+        url: post.url,
+        content: post.compiledContent ? post.compiledContent().replace(/<[^>]*>/g, '') : ''
+      }));
+    </script>
   </body>
 </html>
 

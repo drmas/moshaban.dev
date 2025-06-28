@@ -371,7 +371,10 @@
         exit: () => this.closeTerminal(),
         theme: (args) => this.changeTheme(args),
         contact: () => this.showContact(),
-        tree: () => this.showTree()
+        tree: () => this.showTree(),
+        search: (args) => this.searchPosts(args),
+        grep: (args) => this.searchPosts(args),
+        find: (args) => this.searchPosts(args)
       };
 
       this.init();
@@ -563,6 +566,7 @@
         '    home       - Go to homepage',
         '    blog       - Go to blog section',
         '    about      - Go to about page',
+        '    search <term> - Search blog posts',
         '',
         '  Content:',
         '    cat <file> - View post content',
@@ -724,6 +728,34 @@
       ];
 
       tree.forEach(line => this.addOutput(line, 'terminal-success'));
+    }
+
+    searchPosts(args) {
+      if (!args || args.length === 0) {
+        this.addOutput('Usage: search <search term>', 'terminal-error');
+        this.addOutput('Example: search astro', 'terminal-info');
+        return;
+      }
+
+      const searchTerm = args.join(' ');
+      this.addOutput(`Searching for "${searchTerm}"...`, 'terminal-info');
+      
+      // Open the search overlay with the term
+      if (window.searchInstance) {
+        setTimeout(() => {
+          this.close();
+          window.searchInstance.open();
+          setTimeout(() => {
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+              searchInput.value = searchTerm;
+              searchInput.dispatchEvent(new Event('input'));
+            }
+          }, 200);
+        }, 500);
+      } else {
+        this.addOutput('Search not available', 'terminal-error');
+      }
     }
   }
 

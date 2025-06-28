@@ -246,7 +246,7 @@
 
     .keyboard-indicator {
       bottom: 5rem;
-      left: 1rem;
+      left: 8rem;
       font-size: 0.6875rem;
     }
 
@@ -404,7 +404,7 @@
           this.reloadPage();
           break;
         case '/':
-          this.focusSearch();
+          this.openSearch();
           break;
         case '?':
           this.toggleHelp();
@@ -497,24 +497,10 @@
       }, 300);
     }
 
-    focusSearch() {
-      // Try to focus terminal instead of search since we don't have search
-      const terminal = document.getElementById('terminal-input');
-      if (terminal) {
-        const terminalOverlay = document.getElementById('terminal-overlay');
-        if (terminalOverlay && terminalOverlay.classList.contains('hidden')) {
-          // Open terminal and focus
-          const event = new KeyboardEvent('keydown', {
-            key: '`',
-            ctrlKey: true,
-            bubbles: true
-          });
-          document.dispatchEvent(event);
-        } else {
-          terminal.focus();
-        }
-      } else {
-        this.showNavigationFeedback('Search not available - use Ctrl+` for terminal');
+    openSearch() {
+      if (window.searchInstance) {
+        window.searchInstance.open();
+        this.showNavigationFeedback('Search opened');
       }
     }
 
