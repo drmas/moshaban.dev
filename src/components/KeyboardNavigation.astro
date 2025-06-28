@@ -1,0 +1,670 @@
+---
+// Global keyboard navigation component
+---
+
+<div id="keyboard-help" class="keyboard-help hidden" role="dialog" aria-labelledby="help-title" aria-hidden="true">
+  <div class="help-content">
+    <div class="help-header">
+      <h3 id="help-title">Keyboard Shortcuts</h3>
+      <button id="close-help" class="close-help" aria-label="Close help">×</button>
+    </div>
+    <div class="help-body">
+      <div class="shortcut-section">
+        <h4>Navigation</h4>
+        <div class="shortcuts">
+          <div class="shortcut">
+            <kbd>H</kbd> <span>Home page</span>
+          </div>
+          <div class="shortcut">
+            <kbd>A</kbd> <span>About page</span>
+          </div>
+          <div class="shortcut">
+            <kbd>B</kbd> <span>Blog/Articles</span>
+          </div>
+          <div class="shortcut">
+            <kbd>1-9</kbd> <span>Jump to article</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="shortcut-section">
+        <h4>Scrolling</h4>
+        <div class="shortcuts">
+          <div class="shortcut">
+            <kbd>J</kbd> <span>Scroll down</span>
+          </div>
+          <div class="shortcut">
+            <kbd>K</kbd> <span>Scroll up</span>
+          </div>
+          <div class="shortcut">
+            <kbd>G</kbd> <kbd>G</kbd> <span>Go to top</span>
+          </div>
+          <div class="shortcut">
+            <kbd>G</kbd> <kbd>E</kbd> <span>Go to bottom</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="shortcut-section">
+        <h4>Actions</h4>
+        <div class="shortcuts">
+          <div class="shortcut">
+            <kbd>Ctrl</kbd> + <kbd>`</kbd> <span>Toggle terminal</span>
+          </div>
+          <div class="shortcut">
+            <kbd>/</kbd> <span>Focus search</span>
+          </div>
+          <div class="shortcut">
+            <kbd>R</kbd> <span>Reload page</span>
+          </div>
+          <div class="shortcut">
+            <kbd>?</kbd> <span>Show this help</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="keyboard-indicator" id="keyboard-indicator">
+  <kbd>?</kbd> for shortcuts
+</div>
+
+<style>
+  .keyboard-help {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    transition: all 0.3s ease;
+  }
+
+  .keyboard-help.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.95);
+  }
+
+  .keyboard-help.show {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+  }
+
+  .help-content {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: 12px;
+    width: 100%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+  }
+
+  .help-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-primary);
+    background: var(--bg-secondary);
+    border-radius: 12px 12px 0 0;
+  }
+
+  .help-header h3 {
+    margin: 0;
+    color: var(--text-bright);
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .close-help {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .close-help:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-bright);
+  }
+
+  .help-body {
+    padding: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+
+  .shortcut-section h4 {
+    margin: 0 0 1rem 0;
+    color: var(--syntax-function);
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: var(--font-mono);
+  }
+
+  .shortcuts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .shortcut {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  .shortcut kbd {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-primary);
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent-primary);
+    font-weight: 600;
+    min-width: 1.5rem;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .shortcut span {
+    color: var(--text-secondary);
+  }
+
+  .keyboard-indicator {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    opacity: 0.7;
+    transition: all 0.2s ease;
+    z-index: 100;
+    cursor: pointer;
+  }
+
+  .keyboard-indicator:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 8px -1px rgba(0, 0, 0, 0.15);
+  }
+
+  .keyboard-indicator kbd {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-primary);
+    border-radius: 3px;
+    padding: 0.125rem 0.25rem;
+    font-size: 0.6875rem;
+    color: var(--accent-primary);
+    font-family: var(--font-mono);
+  }
+
+  /* Keyboard navigation visual feedback */
+  .keyboard-focus {
+    outline: 2px solid var(--accent-primary) !important;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .keyboard-scroll-indicator {
+    position: fixed;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: 20px;
+    padding: 0.5rem;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 200;
+    pointer-events: none;
+  }
+
+  .keyboard-scroll-indicator.show {
+    opacity: 0.8;
+  }
+
+  .keyboard-scroll-indicator kbd {
+    display: block;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-primary);
+    border-radius: 3px;
+    padding: 0.25rem;
+    margin: 0.125rem 0;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--accent-primary);
+    text-align: center;
+    min-width: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .help-body {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      padding: 1rem;
+    }
+
+    .keyboard-indicator {
+      bottom: 5rem;
+      left: 1rem;
+      font-size: 0.6875rem;
+    }
+
+    .keyboard-help {
+      padding: 1rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .keyboard-help,
+    .keyboard-indicator {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  class KeyboardNavigation {
+    constructor() {
+      this.isGPressed = false;
+      this.gPressTimeout = null;
+      this.scrollIndicatorTimeout = null;
+      this.helpOpen = false;
+      
+      this.init();
+    }
+
+    init() {
+      this.helpOverlay = document.getElementById('keyboard-help');
+      this.helpIndicator = document.getElementById('keyboard-indicator');
+      this.closeHelpBtn = document.getElementById('close-help');
+      
+      this.createScrollIndicator();
+      this.setupEventListeners();
+      this.setupFocusManagement();
+    }
+
+    createScrollIndicator() {
+      this.scrollIndicator = document.createElement('div');
+      this.scrollIndicator.className = 'keyboard-scroll-indicator';
+      this.scrollIndicator.innerHTML = `
+        <kbd>J</kbd>
+        <kbd>K</kbd>
+      `;
+      document.body.appendChild(this.scrollIndicator);
+    }
+
+    setupEventListeners() {
+      document.addEventListener('keydown', (e) => {
+        // Don't handle shortcuts when user is typing in inputs or terminal is open
+        if (this.isInputFocused() || this.isTerminalOpen()) {
+          return;
+        }
+
+        // Prevent default for handled keys
+        if (this.shouldPreventDefault(e.key, e)) {
+          e.preventDefault();
+        }
+
+        this.handleKeyPress(e);
+      });
+
+      document.addEventListener('keyup', (e) => {
+        if (e.key === 'g' || e.key === 'G') {
+          this.isGPressed = false;
+          if (this.gPressTimeout) {
+            clearTimeout(this.gPressTimeout);
+          }
+        }
+      });
+
+      // Help overlay controls
+      this.helpIndicator.addEventListener('click', () => {
+        this.showHelp();
+      });
+
+      this.closeHelpBtn.addEventListener('click', () => {
+        this.hideHelp();
+      });
+
+      this.helpOverlay.addEventListener('click', (e) => {
+        if (e.target === this.helpOverlay) {
+          this.hideHelp();
+        }
+      });
+    }
+
+    setupFocusManagement() {
+      // Enhanced tab navigation
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Tab') {
+          this.enhanceTabNavigation(e);
+        }
+      });
+    }
+
+    isInputFocused() {
+      const activeElement = document.activeElement;
+      return activeElement && (
+        activeElement.tagName === 'INPUT' ||
+        activeElement.tagName === 'TEXTAREA' ||
+        activeElement.contentEditable === 'true'
+      );
+    }
+
+    isTerminalOpen() {
+      const terminal = document.getElementById('terminal-overlay');
+      return terminal && !terminal.classList.contains('hidden');
+    }
+
+    shouldPreventDefault(key, event) {
+      const preventKeys = ['j', 'k', 'h', 'a', 'b', 'r', '/', '?'];
+      const numberKeys = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+      
+      if (key === 'g' || key === 'G') return true;
+      if (preventKeys.includes(key.toLowerCase())) return true;
+      if (numberKeys.includes(key)) return true;
+      
+      return false;
+    }
+
+    handleKeyPress(e) {
+      const key = e.key.toLowerCase();
+
+      // Handle G combinations
+      if (key === 'g') {
+        if (this.isGPressed) {
+          this.scrollToTop();
+          this.isGPressed = false;
+          if (this.gPressTimeout) {
+            clearTimeout(this.gPressTimeout);
+          }
+          return;
+        }
+
+        this.isGPressed = true;
+        this.gPressTimeout = setTimeout(() => {
+          this.isGPressed = false;
+        }, 1000);
+        return;
+      }
+
+      if (key === 'e' && this.isGPressed) {
+        this.scrollToBottom();
+        this.isGPressed = false;
+        return;
+      }
+
+      // Navigation shortcuts
+      switch (key) {
+        case 'h':
+          this.navigateToHome();
+          break;
+        case 'a':
+          this.navigateToAbout();
+          break;
+        case 'b':
+          this.navigateToBlog();
+          break;
+        case 'j':
+          this.scrollDown();
+          break;
+        case 'k':
+          this.scrollUp();
+          break;
+        case 'r':
+          this.reloadPage();
+          break;
+        case '/':
+          this.focusSearch();
+          break;
+        case '?':
+          this.toggleHelp();
+          break;
+        case 'escape':
+          this.hideHelp();
+          break;
+      }
+
+      // Number keys for article navigation
+      if (/^[1-9]$/.test(key)) {
+        this.navigateToArticle(parseInt(key));
+      }
+    }
+
+    navigateToHome() {
+      if (window.location.pathname !== '/') {
+        this.showNavigationFeedback('Going to home...');
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 300);
+      }
+    }
+
+    navigateToAbout() {
+      if (window.location.pathname !== '/about') {
+        this.showNavigationFeedback('Going to about page...');
+        setTimeout(() => {
+          window.location.href = '/about';
+        }, 300);
+      }
+    }
+
+    navigateToBlog() {
+      if (window.location.pathname !== '/') {
+        this.showNavigationFeedback('Going to blog...');
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 300);
+      }
+    }
+
+    navigateToArticle(number) {
+      const articles = document.querySelectorAll('.post-item');
+      if (articles[number - 1]) {
+        const link = articles[number - 1].querySelector('.post-link');
+        if (link) {
+          this.showNavigationFeedback(`Opening article ${number}...`);
+          setTimeout(() => {
+            link.click();
+          }, 300);
+        }
+      }
+    }
+
+    scrollDown() {
+      this.showScrollIndicator();
+      window.scrollBy({
+        top: 100,
+        behavior: 'smooth'
+      });
+    }
+
+    scrollUp() {
+      this.showScrollIndicator();
+      window.scrollBy({
+        top: -100,
+        behavior: 'smooth'
+      });
+    }
+
+    scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+      this.showNavigationFeedback('Scrolled to top');
+    }
+
+    scrollToBottom() {
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: 'smooth'
+      });
+      this.showNavigationFeedback('Scrolled to bottom');
+    }
+
+    reloadPage() {
+      this.showNavigationFeedback('Reloading page...');
+      setTimeout(() => {
+        window.location.reload();
+      }, 300);
+    }
+
+    focusSearch() {
+      // Try to focus terminal instead of search since we don't have search
+      const terminal = document.getElementById('terminal-input');
+      if (terminal) {
+        const terminalOverlay = document.getElementById('terminal-overlay');
+        if (terminalOverlay && terminalOverlay.classList.contains('hidden')) {
+          // Open terminal and focus
+          const event = new KeyboardEvent('keydown', {
+            key: '`',
+            ctrlKey: true,
+            bubbles: true
+          });
+          document.dispatchEvent(event);
+        } else {
+          terminal.focus();
+        }
+      } else {
+        this.showNavigationFeedback('Search not available - use Ctrl+` for terminal');
+      }
+    }
+
+    showScrollIndicator() {
+      this.scrollIndicator.classList.add('show');
+      
+      if (this.scrollIndicatorTimeout) {
+        clearTimeout(this.scrollIndicatorTimeout);
+      }
+      
+      this.scrollIndicatorTimeout = setTimeout(() => {
+        this.scrollIndicator.classList.remove('show');
+      }, 1000);
+    }
+
+    showNavigationFeedback(message) {
+      // Create temporary feedback element
+      const feedback = document.createElement('div');
+      feedback.style.cssText = `
+        position: fixed;
+        top: 2rem;
+        right: 2rem;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-primary);
+        padding: 0.75rem 1rem;
+        border-radius: 6px;
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--accent-success);
+        z-index: 1500;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      `;
+      feedback.textContent = message;
+      document.body.appendChild(feedback);
+
+      // Animate in
+      requestAnimationFrame(() => {
+        feedback.style.opacity = '1';
+        feedback.style.transform = 'translateY(0)';
+      });
+
+      // Remove after delay
+      setTimeout(() => {
+        feedback.style.opacity = '0';
+        feedback.style.transform = 'translateY(-10px)';
+        setTimeout(() => {
+          if (feedback.parentNode) {
+            feedback.parentNode.removeChild(feedback);
+          }
+        }, 300);
+      }, 2000);
+    }
+
+    toggleHelp() {
+      if (this.helpOpen) {
+        this.hideHelp();
+      } else {
+        this.showHelp();
+      }
+    }
+
+    showHelp() {
+      this.helpOpen = true;
+      this.helpOverlay.classList.remove('hidden');
+      this.helpOverlay.classList.add('show');
+      this.helpOverlay.setAttribute('aria-hidden', 'false');
+      
+      // Focus the close button
+      setTimeout(() => {
+        this.closeHelpBtn.focus();
+      }, 100);
+    }
+
+    hideHelp() {
+      this.helpOpen = false;
+      this.helpOverlay.classList.remove('show');
+      this.helpOverlay.classList.add('hidden');
+      this.helpOverlay.setAttribute('aria-hidden', 'true');
+    }
+
+    enhanceTabNavigation(e) {
+      // Add visual feedback for tab navigation
+      const focusedElement = document.activeElement;
+      if (focusedElement) {
+        focusedElement.classList.add('keyboard-focus');
+        
+        setTimeout(() => {
+          focusedElement.classList.remove('keyboard-focus');
+        }, 2000);
+      }
+    }
+  }
+
+  // Initialize keyboard navigation
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      new KeyboardNavigation();
+    });
+  } else {
+    new KeyboardNavigation();
+  }
+</script>

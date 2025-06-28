@@ -1,5 +1,6 @@
 ---
 import Terminal from '../components/Terminal.astro';
+import KeyboardNavigation from '../components/KeyboardNavigation.astro';
 
 export interface Props {
   title: string;
@@ -71,6 +72,9 @@ const { title, description = "Mo Shaban's tech blog - Thoughts on software devel
     
     <!-- Terminal Component -->
     <Terminal />
+    
+    <!-- Keyboard Navigation -->
+    <KeyboardNavigation />
     
     <footer class="footer" role="contentinfo">
       <div class="container">
