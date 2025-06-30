@@ -260,7 +260,7 @@ For production, ensure:
 - **Website**: [moshaban.dev](https://moshaban.dev)
 - **Email**: hello@moshaban.dev
 - **GitHub**: [@moshaban](https://github.com/moshaban)
-- **Twitter**: [@moshaban](https://twitter.com/moshaban)
+- **Twitter**: [@_mo_shaban](https://twitter.com/_mo_shaban)
 
 ## 📄 License
 
