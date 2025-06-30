@@ -62,9 +62,9 @@ try {
             <div class="post-tags">
               <span class="tags-label">tags:</span>
               {tags.map(tag => (
-                <span class="tag">
+                <a href={`/tags/${tag.toLowerCase().replace(/\s+/g, '-')}`} class="tag">
                   <span class="tag-symbol">#</span>{tag.toLowerCase().replace(/\s+/g, '-')}
-                </span>
+                </a>
               ))}
             </div>
           )}
@@ -235,6 +235,7 @@ try {
     border: 1px solid var(--border-primary);
     transition: all 0.2s ease;
     cursor: pointer;
+    text-decoration: none;
   }
 
   .tag:hover {

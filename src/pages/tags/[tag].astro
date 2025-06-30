@@ -1,0 +1,396 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const posts = await Astro.glob('../blog/*.md');
+  
+  // Get all unique tags from all posts
+  const allTags = posts.flatMap(post => post.frontmatter.tags || []);
+  const uniqueTags = [...new Set(allTags)];
+  
+  return uniqueTags.map(tag => ({
+    params: { tag: tag.toLowerCase().replace(/\s+/g, '-') },
+    props: { 
+      tag,
+      posts: posts.filter(post => 
+        post.frontmatter.tags?.some(postTag => 
+          postTag.toLowerCase().replace(/\s+/g, '-') === tag.toLowerCase().replace(/\s+/g, '-')
+        )
+      ).sort((a, b) => 
+        new Date(b.frontmatter.publishDate).getTime() - new Date(a.frontmatter.publishDate).getTime()
+      )
+    }
+  }));
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<Layout title={`Posts tagged "${tag}" - Mo Shaban`} description={`All blog posts about ${tag}`}>
+  <div class="container">
+    <div class="tag-page">
+      <header class="tag-header">
+        <div class="breadcrumb">
+          <a href="/" class="breadcrumb-link">~/blog</a>
+          <span class="breadcrumb-separator">/</span>
+          <span class="breadcrumb-link">tags</span>
+          <span class="breadcrumb-separator">/</span>
+          <span class="breadcrumb-current">{tag}.md</span>
+        </div>
+        
+        <div class="tag-title-section">
+          <h1 class="tag-title">
+            <span class="title-prefix">// </span>
+            Posts tagged 
+            <span class="tag-highlight">#{tag.toLowerCase().replace(/\s+/g, '-')}</span>
+          </h1>
+          <p class="tag-description">
+            Found {posts.length} article{posts.length !== 1 ? 's' : ''} with this tag
+          </p>
+        </div>
+      </header>
+      
+      <div class="posts-container">
+        {posts.map((post, index) => (
+          <article class="post-item">
+            <div class="post-header">
+              <div class="file-info">
+                <span class="file-icon" aria-hidden="true">
+                  {post.frontmatter.tags?.includes('TypeScript') ? '🔷' :
+                   post.frontmatter.tags?.includes('JavaScript') ? '🟨' :
+                   post.frontmatter.tags?.includes('React') ? '⚛️' :
+                   post.frontmatter.tags?.includes('Astro') ? '🚀' : '📄'}
+                </span>
+                <span class="file-name">
+                  {post.url.split('/').pop()?.replace('.html', '.md')}
+                </span>
+              </div>
+              <div class="post-meta">
+                <span class="commit-id">#{String(index + 1).padStart(2, '0')}</span>
+                <time class="post-date" datetime={post.frontmatter.publishDate}>
+                  {new Date(post.frontmatter.publishDate).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric'
+                  })}
+                </time>
+              </div>
+            </div>
+            
+            <div class="post-content">
+              <h3 class="post-title">
+                <a href={post.url} class="post-link">
+                  {post.frontmatter.title}
+                </a>
+              </h3>
+              
+              <p class="post-description">
+                {post.frontmatter.description}
+              </p>
+              
+              {post.frontmatter.tags && (
+                <div class="post-tags" role="list" aria-label="Article tags">
+                  {post.frontmatter.tags.map(postTag => (
+                    <a 
+                      href={`/tags/${postTag.toLowerCase().replace(/\s+/g, '-')}`} 
+                      class="tag"
+                      role="listitem"
+                    >
+                      <span class="tag-symbol" aria-hidden="true">#</span>{postTag.toLowerCase().replace(/\s+/g, '-')}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+      
+      <div class="back-navigation">
+        <a href="/" class="back-link">
+          <span class="back-icon">←</span>
+          <span class="back-text">Back to all posts</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .tag-page {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .tag-header {
+    margin-bottom: var(--spacing-2xl);
+    padding-bottom: var(--spacing-xl);
+    border-bottom: 2px solid var(--border-primary);
+    position: relative;
+  }
+
+  .tag-header::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+  }
+
+  .breadcrumb {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+  }
+
+  .breadcrumb-link {
+    color: var(--accent-primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .breadcrumb-link:hover {
+    color: var(--accent-secondary);
+  }
+
+  .breadcrumb-separator {
+    color: var(--text-muted);
+  }
+
+  .breadcrumb-current {
+    color: var(--syntax-string);
+  }
+
+  .tag-title-section {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .tag-title {
+    font-size: 2.5rem;
+    line-height: 1.1;
+    margin-bottom: var(--spacing-md);
+    color: var(--text-bright);
+  }
+
+  .title-prefix {
+    color: var(--syntax-comment);
+    font-family: var(--font-mono);
+    font-weight: 400;
+  }
+
+  .tag-highlight {
+    color: var(--accent-primary);
+    font-family: var(--font-mono);
+    background: var(--bg-tertiary);
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-primary);
+  }
+
+  .tag-description {
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  .posts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .post-item {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.15s ease;
+    position: relative;
+  }
+
+  .post-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+    border-radius: 8px 8px 0 0;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+
+  .post-item:hover {
+    transform: translateY(-1px);
+    border-color: var(--border-accent);
+  }
+
+  .post-item:hover::before {
+    opacity: 1;
+  }
+
+  .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+  }
+
+  .file-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .file-icon {
+    font-size: 1rem;
+  }
+
+  .file-name {
+    color: var(--syntax-string);
+    font-weight: 500;
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .commit-id {
+    color: var(--accent-warning);
+    font-weight: 600;
+  }
+
+  .post-date {
+    font-size: 0.8125rem;
+  }
+
+  .post-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .post-title {
+    margin: 0;
+    font-size: 1.375rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .post-link {
+    color: var(--text-bright);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .post-link:hover {
+    color: var(--accent-primary);
+  }
+
+  .post-description {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    background: var(--bg-tertiary);
+    color: var(--accent-primary);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--border-primary);
+    transition: all 0.15s ease;
+    text-decoration: none;
+  }
+
+  .tag:hover {
+    background: var(--accent-primary);
+    color: var(--bg-primary);
+    transform: translateY(-1px);
+  }
+
+  .tag-symbol {
+    margin-right: 0.125rem;
+    opacity: 0.7;
+  }
+
+  .back-navigation {
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--border-secondary);
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-primary);
+    background: var(--bg-secondary);
+  }
+
+  .back-link:hover {
+    color: var(--accent-primary);
+    border-color: var(--accent-primary);
+    background: var(--bg-tertiary);
+    transform: translateX(-2px);
+  }
+
+  .back-icon {
+    font-size: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .tag-title {
+      font-size: 2rem;
+    }
+    
+    .post-item {
+      padding: 1.25rem;
+    }
+
+    .post-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .post-title {
+      font-size: 1.25rem;
+    }
+  }
+</style>
