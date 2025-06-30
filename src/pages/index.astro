@@ -6,9 +6,16 @@ const posts = await Astro.glob('./blog/*.md');
 const sortedPosts = posts.sort((a, b) => 
   new Date(b.frontmatter.publishDate).getTime() - new Date(a.frontmatter.publishDate).getTime()
 );
+
+// Enhanced SEO data for homepage
+const seoData = {
+  title: "Mo Shaban - Tech Blog",
+  description: "Tech Lead @ Cara.care and co-founder of WeekOne.io. I write about modern web development, React Native, TypeScript, and building elegant software solutions.",
+  type: 'website' as const
+};
 ---
 
-<Layout title="Mo Shaban - Tech Blog">
+<Layout {...seoData}>
   <div class="container">
     <!-- Hero Section -->
     <section class="hero" role="banner">

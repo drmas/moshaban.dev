@@ -25,9 +25,16 @@ export async function getStaticPaths() {
 
 const { tag } = Astro.params;
 const { posts } = Astro.props;
+
+// Enhanced SEO data for tag pages
+const seoData = {
+  title: `Posts tagged "${tag}"`,
+  description: `Explore all ${posts.length} article${posts.length !== 1 ? 's' : ''} about ${tag} on Mo Shaban's tech blog. In-depth content on web development, programming, and technology.`,
+  type: 'website' as const
+};
 ---
 
-<Layout title={`Posts tagged "${tag}" - Mo Shaban`} description={`All blog posts about ${tag}`}>
+<Layout {...seoData}>
   <div class="container">
     <div class="tag-page">
       <header class="tag-header">

@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://moshaban.dev/sitemap.xml
+Sitemap: https://moshaban.dev/rss.xml
+
+# Crawl-delay
+Crawl-delay: 1

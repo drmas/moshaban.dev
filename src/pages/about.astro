@@ -1,8 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+// SEO data for about page
+const seoData = {
+  title: "About Mo Shaban",
+  description: "Learn about Mo Shaban - Tech Lead at Cara.care, co-founder of WeekOne.io, and passionate software engineer building elegant solutions with modern web technologies.",
+  type: 'website' as const
+};
 ---
 
-<Layout title="About - Mo Shaban" description="Learn more about Mo Shaban, software engineer and tech blogger.">
+<Layout {...seoData}>
   <div class="container">
     <div class="about-content">
       <div class="terminal-header">

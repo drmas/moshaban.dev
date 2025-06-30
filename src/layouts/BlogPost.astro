@@ -6,12 +6,14 @@ export interface Props {
   description?: string;
   publishDate: string;
   tags?: string[];
+  image?: string;
 }
 
-const { title, description, publishDate, tags = [] } = Astro.props;
+const { title, description, publishDate, tags = [], image } = Astro.props;
 
 // More robust date parsing
 let formattedDate: string;
+let isoDate: string;
 try {
   const date = new Date(publishDate);
   // Check if date is valid
@@ -23,13 +25,29 @@ try {
     month: 'long',
     day: 'numeric'
   });
+  isoDate = date.toISOString();
 } catch (error) {
   // Fallback to the original string if parsing fails
   formattedDate = publishDate;
+  isoDate = new Date().toISOString();
 }
+
+// Enhanced SEO props for Layout
+const seoProps = {
+  title,
+  description: description || `Read "${title}" on Mo Shaban's tech blog. Insights on web development, programming, and technology.`,
+  image,
+  type: 'article' as const,
+  article: {
+    publishedTime: isoDate,
+    modifiedTime: isoDate,
+    author: "Mo Shaban",
+    tags
+  }
+};
 ---
 
-<Layout title={title} description={description}>
+<Layout {...seoProps}>
   <div class="container">
     <article class="blog-post">
       <header class="post-header">
